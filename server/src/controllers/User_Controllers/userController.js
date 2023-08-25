@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
       });
     } else {
       const salt = await bcryptjs.genSalt(10);
-      const hashPassword = bcryptjs.hash(password, salt);
+      const hashPassword = await bcryptjs.hash(password, salt);
       req.body.password = hashPassword;
 
       const newUser = new userModel(req.body);
@@ -67,7 +67,7 @@ try {
         else{
             //Create and assign token
 
-            const token = jwt.sign({userId: user._id},process.env.TOKEN_SECRET);
+            const token = jwt.sign({userId: user._id},process.env.TOKEN_SECRET, {expiresIn:'1d'});
 
             return res.status(200).send({
                 success: true,
