@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 const userModel = require('../../models/userModel');
 
 
-
+//Register function
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -38,7 +38,7 @@ const registerUser = async (req, res) => {
 };
 
 
-
+// Login function
 const userLogin = async (req, res)=>{
     const {email, password} = req.body;
 
@@ -86,8 +86,31 @@ try {
 }
 
 }
+
+
+// Get user Data
+
+const getUSerData = async (req,res)=>{
+
+  try {
+    const user = await userModel.findById(req.body.userId);
+    console.log(user)
+    return res.status(200).send({
+      success: true,
+      message: "User data fetched successfully",
+      data:user
+    })
+  } catch (error) {
+    return res.status(500).send({
+      success:false,
+      message:`Error ${error.message}`
+    })
+  }
+}
+
 module.exports = {
     registerUser,
-    userLogin
+    userLogin,
+    getUSerData
 
 };

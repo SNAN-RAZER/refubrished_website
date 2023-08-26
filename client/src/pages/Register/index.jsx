@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Divider, Form, Input, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RegisterUser } from '../../apicalls/users';
 
 
@@ -12,6 +12,9 @@ const rules = [
 ]
 
 const Register = () => {
+
+  const navigate = useNavigate();
+
   //Antd message api implementation
   const [messageApi, contextHolder] = message.useMessage();
   const success = (content) => {
@@ -46,6 +49,13 @@ const Register = () => {
     }
   }
 
+
+  useEffect(()=>{
+    if(localStorage.getItem('token'))
+    {
+      navigate('/');
+    }
+  },[]);
   return (
     <div className="h-screen bg-primary flex justify-center items-center">
        {contextHolder}

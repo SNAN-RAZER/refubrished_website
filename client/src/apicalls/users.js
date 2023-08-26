@@ -25,3 +25,18 @@ export const LoginUser = async (payload) => {
     return error.message;
   }
 };
+
+
+//Get user data
+
+export const getCurrentUser = async () =>{
+  try {
+    const response = await axiosInstance.get(
+      "http://localhost:5000/vl/api/users/get-User-data", //URL
+     
+    );
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+}
