@@ -94,7 +94,6 @@ const getUSerData = async (req,res)=>{
 
   try {
     const user = await userModel.findById(req.body.userId);
-    console.log(user)
     return res.status(200).send({
       success: true,
       message: "User data fetched successfully",

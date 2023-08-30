@@ -1,18 +1,41 @@
 import { Tabs } from 'antd'
 import Modal from 'antd/es/modal/Modal'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ProductForm from './ProductForm'
-
 const ProductFormLayout = (
     {
         showProductsForm,
-        setShowProductsForm
+        setShowProductsForm,
+        selectedProduct,
+        setSelectedProduct,
+        getData
     }
 ) => {
-
- 
+    
     const formRef = useRef(null);
- 
+    const items = [
+        {
+          key: '1',
+          label: 'General',
+          children: <ProductForm  
+            
+            formRef= {formRef} 
+            selectedProduct= {selectedProduct}
+            setSelectedProduct = {setSelectedProduct}
+            getData={getData}
+            />,
+        },
+        {
+          key: '2',
+          label: 'Images',
+          children:  <h1>Images</h1>,
+        },
+        
+      ];
+  
+useEffect(()=>{
+    getData();
+},[selectedProduct]); 
      
   return (
    <Modal 
@@ -28,18 +51,10 @@ const ProductFormLayout = (
   
    >
 
-<h1>Add  product</h1>
+    <h1>Add  product</h1>
 
-    <Tabs defaultActiveKey='1'>
+    <Tabs defaultActiveKey='1' items={items} />
 
-        <Tabs.TabPane tab="General" key = "1">
-            <ProductForm  formRef= {formRef}/>
-        </Tabs.TabPane>
-        <Tabs.TabPane  tab="Images" key = "2">
-            <h1>Images</h1>
-        </Tabs.TabPane>
-
-    </Tabs>
 
    </Modal>
   )

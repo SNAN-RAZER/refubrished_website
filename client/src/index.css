@@ -26,3 +26,12 @@ button{
   height: 45px !important;
   box-shadow:  none !important;
 }
+
+table{
+  border: #a1a1a1 1px solid;
+  border-radius: 2px;
+}
+.re-icons{
+  cursor: pointer;
+  font-size: 20px;
+}

@@ -33,9 +33,46 @@ const getAllProducts = async (req, res)=>{
             message:`Error ${error.message}`
         })
     }
+};
+
+//Edit a product
+
+const editProduct = async(req, res)=>{
+    try {
+        const product = await productModel.findByIdAndUpdate(req.params.id, req.body);
+        return res.status(204).send({
+            success: true,
+            message:"Product updated successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message:`Error ${error.message}`
+        })
+    }
+};
+
+//Delete the product
+
+const deleteProduct = async (req, res)=>{
+    try {
+        const product = await productModel.findByIdAndDelete(req.params.id);
+        return res.status(200).send({
+            success:true,
+            message:"Product deleted successfully"
+        })
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message:`Error ${error}`
+        })
+    }
 }
 
 module.exports = {
     addProduct,
-    getAllProducts
+    getAllProducts,
+    editProduct,
+    deleteProduct
 }
