@@ -1,5 +1,5 @@
 import { message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getCurrentUser } from "../apicalls/users";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +46,9 @@ const ProtectedPage = ({ children }) => {
             <h1 className="text-2xl  text-white">MP</h1>
             <div className=" flex fap-1  items-center bg-white py-2 px-5 rounded">
             <i className="ri-shield-user-line mr-5 "></i>
-              <span className="underline cursor-pointer uppercase">
+              <span 
+              onClick={()=>navigate('/profile')}
+              className="underline cursor-pointer uppercase">
                 {user.username}
               
               </span>

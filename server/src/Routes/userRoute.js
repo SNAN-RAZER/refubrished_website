@@ -1,5 +1,5 @@
 const { registerUser, userLogin, getUSerData } = require("../controllers/User_Controllers/userController");
-const userMIddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
 const userRouter = require("express").Router();
 
 //For new User registration
@@ -10,5 +10,5 @@ userRouter.post('/login', userLogin);
 
 
 // Verify userData
-userRouter.get('/get-User-data',userMIddleware,getUSerData);
+userRouter.get('/get-User-data',authMiddleware,getUSerData);
 module.exports = userRouter;
