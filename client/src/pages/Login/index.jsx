@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import {Button, Divider, Form,Input, message} from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../../apicalls/users';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../redux/loadersSlice';
 
 
 const rules = [
@@ -12,16 +14,18 @@ const rules = [
 ]
 
 const Login = () => {
-
+  const dispatch  =useDispatch();
   const navigate = useNavigate();
 
 // OnFinish function
 const onFinish =async (values) =>{
   try {
+    dispatch(setLoader(true));
      const response = await LoginUser(values);
      if(response.success){
       message.success(response.message);
       localStorage.setItem('token', response.data);
+      dispatch(setLoader(false));
       navigate("/");
      }
      else{
@@ -29,7 +33,10 @@ const onFinish =async (values) =>{
      }
      
   } catch (error) {
+    console.log(error)
+   
     message.error(error);
+    dispatch(setLoader(false));
   }
 }
 

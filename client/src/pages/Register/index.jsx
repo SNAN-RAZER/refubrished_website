@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { Button, Divider, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { RegisterUser } from '../../apicalls/users';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../redux/loadersSlice';
 
 
 const rules = [
@@ -12,7 +14,7 @@ const rules = [
 ]
 
 const Register = () => {
-
+  const dispatch  =useDispatch();
   const navigate = useNavigate();
 
   //Antd message api implementation
@@ -36,16 +38,20 @@ const Register = () => {
   // OnFinish function
   const onFinish = async (values) => {
     try {
+      dispatch(setLoader(true));
       const response = await RegisterUser(values);
       if (response.success) {
         success(response.message);
+        dispatch(setLoader(false));
+        navigate('/login');
       }
       else {
         throw new Error(response.message);
       }
 
     } catch (error) {
-      errorM(error);
+      message.error(error);
+      dispatch(setLoader(false));
     }
   }
 
