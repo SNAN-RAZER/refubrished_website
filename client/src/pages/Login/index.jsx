@@ -24,7 +24,9 @@ const onFinish =async (values) =>{
      const response = await LoginUser(values);
      if(response.success){
       message.success(response.message);
-      localStorage.setItem('token', response.data);
+      console.log(response.data)
+      localStorage.removeItem('token');
+      localStorage.setItem('token',response.data);
       dispatch(setLoader(false));
       navigate("/");
      }

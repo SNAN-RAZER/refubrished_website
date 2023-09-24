@@ -1,6 +1,10 @@
 const jwt  =require('jsonwebtoken');
+const dotenv = require('dotenv');
 const bcryptjs = require("bcryptjs");
 const userModel = require('../../models/userModel');
+
+
+dotenv.config();
 
 
 //Register function
@@ -65,7 +69,15 @@ try {
 
         }
         else{
-            //Create and assign token
+
+          // if user is active
+
+          if(user.status !=='active')
+          {
+            throw new Error("The user account is blocked, please contact admin")
+          }
+
+          //Create and assign token
 
             const token = jwt.sign({userId: user._id},process.env.TOKEN_SECRET, {expiresIn:'1d'});
 
@@ -103,13 +115,54 @@ const getUSerData = async (req,res)=>{
     return res.status(500).send({
       success:false,
       message:`Error ${error.message}`
+    });
+
+  }
+}
+
+// Get al users
+const getAllUsers = async (req, res)=>{
+  try {
+    const users = await userModel.find();
+    return res.status(200).send({
+      success : true,
+      message :"All users fetched successfully",
+      data: users
     })
+  } catch (error) {
+    return res.status(500).send({
+      success:false,
+      message:`Error ${error.message}`
+    });
+
+  }
+}
+
+// Update user status
+
+const updateUserStatus = async(req, res)=>{
+  try {
+    const {status} = req.body
+    await userModel.findByIdAndUpdate(req.params.id, {status});
+    return res.status(201).send({
+      success : true,
+      message :"User status updated successfully",
+     
+    })
+  } catch (error) {
+    return res.status(500).send({
+      success:false,
+      message:`Error ${error.message}`
+    });
+
   }
 }
 
 module.exports = {
     registerUser,
     userLogin,
-    getUSerData
+    getUSerData,
+    getAllUsers,
+    updateUserStatus
 
 };

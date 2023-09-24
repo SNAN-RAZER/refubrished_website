@@ -62,6 +62,8 @@ const ProductForm = ({ formRef,
             if (response.success) {
                 dispatch(setLoader(false));
                 message.success(response.message);
+                getData();
+                navigate('/profile');
             }
             else{
                 throw new Error(response.message)

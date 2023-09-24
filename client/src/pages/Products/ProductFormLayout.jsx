@@ -1,7 +1,8 @@
 import { Tabs } from 'antd'
 import Modal from 'antd/es/modal/Modal'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ProductForm from './ProductForm'
+import Images from './Images'
 const ProductFormLayout = (
     {
         showProductsForm,
@@ -11,7 +12,7 @@ const ProductFormLayout = (
         getData
     }
 ) => {
-    
+    const [selectedTab="1", setSelectedTab] = useState("1");
     const formRef = useRef(null);
     const items = [
         {
@@ -24,11 +25,20 @@ const ProductFormLayout = (
             setSelectedProduct = {setSelectedProduct}
             getData={getData}
             />,
+            
         },
         {
           key: '2',
           label: 'Images',
-          children:  <h1>Images</h1>,
+          children:  <Images  
+          selectedProduct={selectedProduct}
+          setSelectedProduct ={setSelectedProduct}
+          getData = {getData}
+          setShowProductsForm = {setShowProductsForm}
+          />,
+          disabled: !selectedProduct?true:false,
+         
+          
         },
         
       ];
@@ -48,12 +58,17 @@ useEffect(()=>{
     formRef.current.submit();
     setShowProductsForm(false);
    }}
-  
+   {...(selectedTab==='2' && {footer: false})}
    >
 
     <h1>Add  product</h1>
 
-    <Tabs defaultActiveKey='1' items={items} />
+    <Tabs 
+    defaultActiveKey='1'
+   activeKey={selectedTab}
+    items={items}
+    onChange={(e)=>setSelectedTab(`${e}`)}
+    />
 
 
    </Modal>
