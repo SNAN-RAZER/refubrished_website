@@ -1,4 +1,6 @@
+const userModel = require("../../models/userModel");
 const productModel = require("../../models/ProductModel");
+const notificationModel = require("../../models/notificationModel");
 const cloudinary_js_config = require("../../config/cloudinaryConfig");
 
 //Add a new product
@@ -6,6 +8,19 @@ const addProduct = async (req, res) => {
   try {
     const newProduct = new productModel(req.body);
     await newProduct.save();
+
+    //Send notifications to admin
+    const admins = await userModel.find({ role: "admin" });
+    admins.forEach(async (admin) => {
+      const newNotification = await Notification({
+        user: admin._id,
+        message: `New Product added by ${req.user.username}`,
+        title: "New Product",
+        link: "/admin",
+      });
+
+      await newNotification.save();
+    });
     return res.status(201).send({
       success: true,
       message: "Product added successfully",
@@ -22,13 +37,36 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    const { seller, categories = [], age = [], status } = req.body;
+    const { seller, category = [], age = [], status, productName } = req.body;
     let filters = {};
     if (seller) {
       filters.seller = seller;
     }
     if (status) {
       filters.status = status;
+    }
+    // Filter by category
+    if (category.length > 0) {
+      filters.category = { $in: category };
+    }
+
+    // Filter By age
+
+    if (age.length > 0) {
+      age.forEach((item) => {
+        const fromAge = item.split("-")[0];
+        const toAge = item.split("-")[1];
+        filters.age = { $gte: fromAge, $lte: toAge };
+      });
+    }
+
+    // Filter by productName
+
+    // # Usage of $regex operator
+    // db.student.find({"email":{$regex:"gmail.com"}});
+
+    if (productName) {
+      filters.name = { $regex: `${productName}` };
     }
     const products = await productModel
       .find(filters)
@@ -138,8 +176,19 @@ const uploadImage = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { status } = req.body;
-    await productModel.findByIdAndUpdate(req.params.id, { status });
+    const updatedProduct = await productModel.findByIdAndUpdate(req.params.id, {
+      status,
+    });
 
+    //  Send notification to seller
+
+    const newNotification = new notificationModel({
+      user: updatedProduct.seller,
+      message: `Your product ${updatedProduct.name} has been ${status}`,
+      title: "Product status updated",
+      onClick: "/profile",
+    });
+    await newNotification.save();
     return res.status(201).send({
       success: true,
       message: "Product status updated successfully",

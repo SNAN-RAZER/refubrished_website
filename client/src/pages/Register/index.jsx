@@ -14,7 +14,7 @@ const rules = [
 ]
 
 const Register = () => {
-  const dispatch  =useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //Antd message api implementation
@@ -56,18 +56,17 @@ const Register = () => {
   }
 
 
-  useEffect(()=>{
-    if(localStorage.getItem('token'))
-    {
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
       navigate('/');
     }
-  },[]);
+  }, []);
   return (
     <div className="h-screen bg-primary flex justify-center items-center">
-       {contextHolder}
+      {contextHolder}
       <div className="bg-white p-3 rounded w-[450px]">
         <h1 className='text-primary text-2xl'>
-          SMP - <span className="text-gray-400">
+          SMP - <span className="text-gray-400 text-2xl">
             Register
           </span>
         </h1>

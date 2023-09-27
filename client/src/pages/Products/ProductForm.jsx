@@ -42,22 +42,21 @@ const ProductForm = ({ formRef,
     setSelectedProduct,
     getData }) => {
     const dispatch = useDispatch();
-    const navigate= useNavigate();
+    const navigate = useNavigate();
     const { user } = useSelector(state => state.user);
     const onFinish = async (values) => {
         try {
-          
+
             dispatch(setLoader(true));
             let response = null;
-            if(selectedProduct)
-            {
-                response = await editProduct(selectedProduct._id,values);
+            if (selectedProduct) {
+                response = await editProduct(selectedProduct._id, values);
             }
-            else{
+            else {
                 values.seller = user._id;
-               values.status = "pending";
-               response = await addProduct(values);
-               
+                values.status = "pending";
+                response = await addProduct(values);
+
             }
             if (response.success) {
                 dispatch(setLoader(false));
@@ -65,7 +64,7 @@ const ProductForm = ({ formRef,
                 getData();
                 navigate('/profile');
             }
-            else{
+            else {
                 throw new Error(response.message)
             }
         } catch (error) {
@@ -79,12 +78,12 @@ const ProductForm = ({ formRef,
         if (selectedProduct) {
             formRef.current.setFieldsValue(selectedProduct);
         }
-      
+
     }, [])
     return (
         <div>
             <h1 className="text-primary text-xl text-center">
-                {selectedProduct?selectedProduct.name:"Add  product"}
+                {selectedProduct ? selectedProduct.name : "Add  product"}
             </h1>
             <Form layout='vertical'
                 ref={formRef}
@@ -144,7 +143,7 @@ const ProductForm = ({ formRef,
                                 <option value="fashion">
                                     Fashion
                                 </option>
-                                <option value="hone">
+                                <option value="home">
                                     Home
                                 </option>
                                 <option value="sports">

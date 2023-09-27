@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoader } from '../../redux/loadersSlice'
 import { placeNewBid } from '../../apicalls/bids'
+import { AddNotification } from '../../apicalls/notification'
 
 const BidModal = ({
     showBidModal,
@@ -34,6 +35,14 @@ const BidModal = ({
             dispatch(setLoader(false));
             if (response.success) {
                 message.success(response.message);
+                // Send a notification to seller
+                await AddNotification({
+                    title: "A new bid has been placed",
+                    message: `A new bid has been placed on your product ${product.name} by ${user.username} for ${values.bidAmount}
+                    `,
+                    user: product.seller._id,
+                    Onclick: '/profile'
+                })
                 reloadData();
                 setShowBidModal(false)
             }
@@ -51,7 +60,7 @@ const BidModal = ({
             width={600}
             onOk={() => formRef.current.submit()}
         >
-            <div className="flex flex-col gap-5 mb-5">
+            <div className="flex flex-col  gap-5 mb-5">
                 <h1 className='text-2xl font-semibold text-orange-900 text-center'>
                     Place a Bid
                 </h1>

@@ -129,6 +129,12 @@ const ProductInfo = () => {
               <span>{product.accessoriesAvailable ? "Yes" : "No"}</span>
             </div>
 
+            <div className="flex justify-between mt-2">
+              <span>Purchased Year</span>
+              <span>{
+                moment().subtract(product.age, 'years').format("YYYY")
+              } ({product.age} {product.age > 1 ? "years" : "year"} ago)</span>
+            </div>
 
           </div>
 

@@ -25,7 +25,7 @@ const AdminProduct = () => {
         }
     }
 
-    const onStatusUpdate = async (id, status) => { 
+    const onStatusUpdate = async (id, status) => {
         try {
             dispatch(setLoader(true));
             const response = await updateProductStatus(id, status);
@@ -44,6 +44,17 @@ const AdminProduct = () => {
     }
     const columns = [
         {
+            title: "Product Image",
+            dataIndex: "image",
+            render: (text, record) => {
+                return (
+                    <img src={record?.images?.length > 0 ? record.images[0] : ""}
+                        className="w-20 h-20 object-cover rounded-md"
+                        alt="" />
+                )
+            }
+        },
+        {
             title: "Product",
             dataIndex: "name",
         },
@@ -54,10 +65,7 @@ const AdminProduct = () => {
                 record.seller.username
 
         },
-        {
-            title: "Description",
-            dataIndex: "description"
-        },
+
         {
             title: "Price",
             dataIndex: "price"
@@ -73,15 +81,15 @@ const AdminProduct = () => {
         {
             title: "Status",
             dataIndex: "status",
-            render:(text, record)=>{
+            render: (text, record) => {
                 return record.status.toUpperCase()
-             }
+            }
         },
         {
             title: "Added On",
             dataIndex: "createdAt",
-            render:(text, record)=>{
-               return  moment(record.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+            render: (text, record) => {
+                return moment(record.createdAt).format('MMMM Do YYYY, h:mm:ss a')
             }
         },
         {
@@ -92,7 +100,7 @@ const AdminProduct = () => {
                 return (<div className="flex gap-5">
                     {status === 'pending' && (
                         <span
-                        className="underline cursor-pointer"
+                            className="underline cursor-pointer"
                             onClick={() => onStatusUpdate(_id, "approved")}
                         > Approve
                         </span>
@@ -100,7 +108,7 @@ const AdminProduct = () => {
 
                     {status === 'pending' && (
                         <span
-                        className="underline cursor-pointer"
+                            className="underline cursor-pointer"
                             onClick={() => onStatusUpdate(_id, "rejected")}
                         > Reject
                         </span>
@@ -108,14 +116,14 @@ const AdminProduct = () => {
 
                     {status === 'approved' && (
                         <span
-                        className="underline cursor-pointer"
+                            className="underline cursor-pointer"
                             onClick={() => onStatusUpdate(_id, "blocked")}
                         > Block
                         </span>
                     )}
                     {status === 'blocked' && (
                         <span
-                        className="underline cursor-pointer"
+                            className="underline cursor-pointer"
                             onClick={() => onStatusUpdate(_id, "pending")}
                         > UnBlock
                         </span>

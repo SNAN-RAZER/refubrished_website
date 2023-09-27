@@ -33,8 +33,15 @@ const Bids = ({
         getData();
     }, []);
 
-
+    console.log(bidsData)
     const columns = [
+        {
+            title: "Bid Placed On",
+            dataIndex: "createdAt",
+            render: (text, record) => {
+                return moment(text).format("DD/MM/YY hh:mm:ss")
+            }
+        },
         {
             title: "Name",
             dataIndex: "name",
@@ -50,7 +57,7 @@ const Bids = ({
             title: "Bid Date",
             dataIndex: "createdAt",
             render: (text, record) => {
-                return moment(text).format("DD/MM/YY hh:mm:ss")
+                return moment(record.seller.createdAt).format("DD/MM/YY hh:mm:ss")
             }
         },
         {

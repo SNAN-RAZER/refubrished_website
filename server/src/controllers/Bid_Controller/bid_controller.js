@@ -21,7 +21,7 @@ const placeNewBid = async (req, res) => {
 // Get all bids
 const getAllBids = async (req, res) => {
   try {
-    const { product, seller } = req.body;
+    const { product, seller, buyer } = req.body;
     let filters = {};
     if (product) {
       filters.product = new mongoose.mongo.ObjectId(product);
@@ -29,14 +29,17 @@ const getAllBids = async (req, res) => {
     if (seller) {
       filters.seller = new mongoose.mongo.ObjectId(seller);
     }
+    if (buyer) {
+      filters.buyer = new mongoose.mongo.ObjectId(buyer);
+    }
 
     console.log(filters);
     const bids = await bidModel
       .find(filters)
       .populate("product")
       .populate("seller")
-      .populate("buyer");
-
+      .populate("buyer")
+      .sort({ createdAr: -1 });
     console.log(bids);
 
     return res.status(200).send({

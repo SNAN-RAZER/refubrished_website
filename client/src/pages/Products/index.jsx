@@ -55,6 +55,17 @@ const Products = () => {
 
     const columns = [
         {
+            title: "Product",
+            dataIndex: "image",
+            render: (text, record) => {
+                return (
+                    <img src={record?.images?.length > 0 ? record.images[0] : ""}
+                        className="w-20 h-20 object-cover rounded-md"
+                        alt="" />
+                )
+            }
+        },
+        {
             title: "Name",
             dataIndex: "name",
         },
