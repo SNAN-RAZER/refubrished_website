@@ -4,7 +4,7 @@ import { axiosInstance } from "./axiosInstance";
 export const AddNotification = async (data) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5001/vl/api/notifications/add-notification",
+      "/vl/api/notifications/add-notification",
       data
     );
     return response.data;
@@ -17,7 +17,7 @@ export const AddNotification = async (data) => {
 export const GetAllNotifications = async (data) => {
   try {
     const response = await axiosInstance.get(
-      "http://localhost:5001/vl/api/notifications/get-all-user-notification"
+      "/vl/api/notifications/get-all-user-notification"
     );
     return response.data;
   } catch (error) {
