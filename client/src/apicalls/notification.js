@@ -28,7 +28,7 @@ export const GetAllNotifications = async (data) => {
 export const ReadAllNotifications = async (data) => {
   try {
     const response = await axiosInstance.put(
-      "http://localhost:5001/vl/api/notifications/read-all-notifications"
+      "/vl/api/notifications/read-all-notifications"
     );
     return response.data;
   } catch (error) {
@@ -40,7 +40,7 @@ export const ReadAllNotifications = async (data) => {
 export const DeleteNotification = async (notificationId) => {
   try {
     const response = await axiosInstance.delete(
-      `http://localhost:5001/vl/api/notifications//delete-a-notification/${notificationId}`
+      `vl/api/notifications/delete-a-notification/${notificationId}`
     );
     return response.data;
   } catch (error) {

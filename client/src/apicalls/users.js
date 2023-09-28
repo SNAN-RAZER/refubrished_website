@@ -4,7 +4,7 @@ const { axiosInstance } = require("./axiosInstance");
 export const RegisterUser = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5001/vl/api/users/register", //URL
+      "/vl/api/users/register", //URL
       payload //req.body
     );
     return response.data;
@@ -17,7 +17,7 @@ export const RegisterUser = async (payload) => {
 export const LoginUser = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5001/vl/api/users/login", //URL
+      "/vl/api/users/login", //URL
       payload //req.body
     );
     return response.data;
@@ -30,7 +30,7 @@ export const LoginUser = async (payload) => {
 export const getCurrentUser = async () => {
   try {
     const response = await axiosInstance.get(
-      "http://localhost:5001/vl/api/users/get-User-data" //URL
+      "/vl/api/users/get-User-data" //URL
     );
     return response.data;
   } catch (error) {
@@ -42,7 +42,7 @@ export const getCurrentUser = async () => {
 export const getAllUsers = async () => {
   try {
     const response = await axiosInstance.get(
-      "http://localhost:5001/vl/api/users/get-all-users" //URL
+      "/vl/api/users/get-all-users" //URL
     );
     return response.data;
   } catch (error) {
@@ -54,7 +54,7 @@ export const getAllUsers = async () => {
 export const updateUserStatus = async (id, status) => {
   try {
     const response = await axiosInstance.put(
-      `http://localhost:5001/vl/api/users/update-user-status/${id}`, //URL
+      `/vl/api/users/update-user-status/${id}`, //URL
       { status }
     );
     return response.data;
