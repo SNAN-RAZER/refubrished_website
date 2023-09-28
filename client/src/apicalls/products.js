@@ -4,7 +4,7 @@ import { axiosInstance } from "./axiosInstance";
 export const addProduct = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5000/vl/api/products/add-product",
+      "http://localhost:5001/vl/api/products/add-product",
       payload
     );
 
@@ -18,7 +18,7 @@ export const addProduct = async (payload) => {
 export const getAllProducts = async (filers) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5000/vl/api/products/get-all-products",
+      "http://localhost:5001/vl/api/products/get-all-products",
       filers
     );
 
@@ -32,7 +32,7 @@ export const getAllProducts = async (filers) => {
 export const getProductById = async (id) => {
   try {
     const response = await axiosInstance.get(
-      `http://localhost:5000/vl/api/products/getProduct/${id}`
+      `http://localhost:5001/vl/api/products/getProduct/${id}`
     );
 
     return response.data;
@@ -45,7 +45,7 @@ export const getProductById = async (id) => {
 export const editProduct = async (id, payload) => {
   try {
     const response = await axiosInstance.put(
-      `http://localhost:5000/vl/api/products/edit-product/${id}`,
+      `http://localhost:5001/vl/api/products/edit-product/${id}`,
       payload
     );
 
@@ -60,7 +60,7 @@ export const editProduct = async (id, payload) => {
 export const deleteProduct = async (id) => {
   try {
     const response = await axiosInstance.delete(
-      `http://localhost:5000/vl/api/products/delete-product/${id}`
+      `http://localhost:5001/vl/api/products/delete-product/${id}`
     );
 
     return response.data;
@@ -73,7 +73,7 @@ export const deleteProduct = async (id) => {
 export const uploadProductImage = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      `http://localhost:5000/vl/api/products/upload-image-to-product`,
+      `http://localhost:5001/vl/api/products/upload-image-to-product`,
       payload
     );
 
@@ -87,7 +87,7 @@ export const uploadProductImage = async (payload) => {
 export const updateProductStatus = async (id, status) => {
   try {
     const response = await axiosInstance.put(
-      `http://localhost:5000/vl/api/products//update-product-status/${id}`,
+      `http://localhost:5001/vl/api/products//update-product-status/${id}`,
       { status }
     );
 
